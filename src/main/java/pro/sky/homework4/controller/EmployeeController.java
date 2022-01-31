@@ -1,8 +1,13 @@
-package pro.sky.homework4;
+package pro.sky.homework4.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pro.sky.homework4.service.EmployeeService;
+import pro.sky.homework4.data.Employee;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/employee")
@@ -14,17 +19,16 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @RequestMapping(path = "/")
+    @GetMapping()
     public String greetEmployee() {
         return "Домашняя страница.";
     }
 
-    @RequestMapping(path = "/add")
+    @GetMapping(path = "/add")
     public Employee addEmployee(@RequestParam(value = "firstName") String firstName,
-                              @RequestParam(value = "secondName") String secondName) {
+                                @RequestParam(value = "secondName") String secondName) {
         Employee addedEmployee = employeeService.addEmployee(firstName, secondName);
         return addedEmployee;
-
 
     }
 
@@ -43,4 +47,8 @@ public class EmployeeController {
         return findedEmployee;
     }
 
+    @RequestMapping(path = "/getAll")
+    public Set<Employee> getAllEmployee() {
+        return employeeService.getAllEmployee();
+    }
 }
