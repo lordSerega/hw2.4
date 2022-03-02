@@ -1,9 +1,6 @@
 package pro.sky.homework4.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pro.sky.homework4.service.EmployeeService;
 import pro.sky.homework4.data.Employee;
 
@@ -27,8 +24,10 @@ public class EmployeeController {
 
     @GetMapping(path = "/add")
     public Employee addEmployee(@RequestParam(value = "firstName") String firstName,
-                                @RequestParam(value = "secondName") String secondName) {
-        Employee addedEmployee = employeeService.addEmployee(firstName, secondName);
+                                @RequestParam(value = "secondName") String secondName,
+                                @RequestParam(value = "department") Integer department,
+                                @RequestParam(value = "salary") Float salary) {
+        Employee addedEmployee = employeeService.addEmployee(firstName, secondName, department, salary);
         return addedEmployee;
 
     }
@@ -36,14 +35,14 @@ public class EmployeeController {
 
     @RequestMapping(path = "/remove")
     public Employee removeEmployee(@RequestParam(value = "firstName") String firstName,
-                                @RequestParam(value = "secondName") String secondName) {
+                                   @RequestParam(value = "secondName") String secondName) {
         Employee removedEmployee = employeeService.removeEmployee(firstName, secondName);
         return removedEmployee;
     }
 
     @RequestMapping(path = "/find")
     public Employee findEmployee(@RequestParam(value = "firstName") String firstName,
-                                   @RequestParam(value = "secondName") String secondName) {
+                                 @RequestParam(value = "secondName") String secondName) {
         Employee findedEmployee = employeeService.findEmployee(firstName, secondName);
         return findedEmployee;
     }
