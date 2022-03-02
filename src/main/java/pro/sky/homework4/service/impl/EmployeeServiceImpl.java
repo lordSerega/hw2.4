@@ -20,8 +20,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee addEmployee(String firstName, String secondName) {
-        Employee addedEmployee = new Employee(firstName, secondName);
+    public Employee addEmployee(String firstName, String secondName, Integer department, Float salary) {
+        Employee addedEmployee = new Employee(firstName, secondName, department, salary);
         String key = firstName + ' ' + secondName;
 
         if (!getEmployeeInSet(key)) {
