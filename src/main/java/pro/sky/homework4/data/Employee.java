@@ -1,4 +1,4 @@
-package pro.sky.homework4;
+package pro.sky.homework4.data;
 
 import java.util.Objects;
 
