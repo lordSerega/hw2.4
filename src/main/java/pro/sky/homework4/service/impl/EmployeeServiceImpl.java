@@ -1,11 +1,14 @@
 package pro.sky.homework4.service.impl;
 
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.homework4.data.Employee;
 import pro.sky.homework4.exceptions.EmployeeExistsException;
 import pro.sky.homework4.exceptions.EmployeeNotFoundException;
 import pro.sky.homework4.service.EmployeeService;
+
+import pro.sky.homework4.exceptions.InvalidNameException;
 
 import java.util.*;
 
@@ -19,9 +22,26 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeBook.containsKey(key);
     }
 
+    private void checkName(String... names) {
+        Arrays.stream(names).forEach(
+                name -> {
+                    if (!StringUtils.isAlpha(name)) {
+                        throw new InvalidNameException("Имя некорректно");
+                    }
+                });
+    }
+
+    private String capitalizeName(String name) {
+        return StringUtils.capitalize(name.toLowerCase());
+    }
+
     @Override
-    public Employee addEmployee(String firstName, String secondName) {
-        Employee addedEmployee = new Employee(firstName, secondName);
+    public Employee addEmployee(String firstName, String secondName, Integer department, Float salary) {
+        checkName(firstName,secondName);
+        firstName = capitalizeName(firstName);
+        secondName = capitalizeName(secondName);
+
+        Employee addedEmployee = new Employee(firstName, secondName, department, salary);
         String key = firstName + ' ' + secondName;
 
         if (!getEmployeeInSet(key)) {
@@ -34,6 +54,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee removeEmployee(String firstName, String secondName) {
+        checkName(firstName,secondName);
+        firstName = capitalizeName(firstName);
+        secondName = capitalizeName(secondName);
+
         Employee removedEmployee = new Employee(firstName, secondName);
         String key = firstName + ' ' + secondName;
 
@@ -47,6 +71,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee findEmployee(String firstName, String secondName) {
+        checkName(firstName,secondName);
+        firstName = capitalizeName(firstName);
+        secondName = capitalizeName(secondName);
+
         Employee foundEmployee = new Employee(firstName, secondName);
         String key = firstName + ' ' + secondName;
 
