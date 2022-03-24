@@ -51,7 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new EmployeeExistsException("Сотрдник уже есть в списке");
         }
     }
-
+    
     @Override
     public Employee removeEmployee(String firstName, String secondName) {
         checkName(firstName,secondName);
@@ -61,7 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee removedEmployee = new Employee(firstName, secondName);
         String key = firstName + ' ' + secondName;
 
-        if (!getEmployeeInSet(key)) {
+        if (getEmployeeInSet(key)) {
             employeeBook.remove(key);
             return removedEmployee;
         } else {
